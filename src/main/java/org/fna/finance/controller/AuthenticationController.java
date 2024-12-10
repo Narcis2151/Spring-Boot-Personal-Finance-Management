@@ -1,5 +1,6 @@
 package org.fna.finance.controller;
 
+import jakarta.validation.Valid;
 import org.fna.finance.dto.LoginResponse;
 import org.fna.finance.service.AuthenticationService;
 import org.fna.finance.service.JwtService;
@@ -22,14 +23,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerUserDto) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
 
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
+    public ResponseEntity<LoginResponse> authenticate(@Valid @RequestBody LoginRequest loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

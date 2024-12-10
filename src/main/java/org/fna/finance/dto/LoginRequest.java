@@ -2,7 +2,6 @@ package org.fna.finance.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
 
 public class LoginRequest {
 
@@ -11,7 +10,6 @@ public class LoginRequest {
     private String email;
 
     @NotBlank()
-    @Length(min = 6)
     private String password;
 
     public LoginRequest() {

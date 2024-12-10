@@ -2,6 +2,8 @@ package org.fna.finance.service;
 
 import org.fna.finance.dto.LoginRequest;
 import org.fna.finance.dto.RegisterRequest;
+import org.fna.finance.exception.DuplicateEmailException;
+import org.fna.finance.exception.InvalidCredentialsException;
 import org.fna.finance.repository.UserRepository;
 import org.fna.finance.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,10 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User signup(RegisterRequest input) {
+    public User signup(RegisterRequest input) throws DuplicateEmailException {
+        if (userRepository.existsByEmail(input.getEmail())) {
+            throw new DuplicateEmailException();
+        }
         User user = new User(
                 input.getFullName(),
                 passwordEncoder.encode(input.getPassword()),
@@ -37,15 +42,15 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
-    public User authenticate(LoginRequest input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
-                        input.getPassword()
-                )
-        );
+    public User authenticate(LoginRequest input) throws InvalidCredentialsException {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
+            );
+        } catch (Exception e) {
+            throw new InvalidCredentialsException();
+        }
+        return userRepository.findByEmail(input.getEmail()).orElseThrow(InvalidCredentialsException::new);
 
-        return userRepository.findByEmail(input.getEmail())
-                .orElseThrow();
     }
 }

@@ -13,8 +13,8 @@ public class Account {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String currency;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Column(nullable = false)
     private double balance;
@@ -26,7 +26,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long id, String name, String currency, double balance, User user) {
+    public Account(Long id, String name, Currency currency, double balance, User user) {
         this.id = id;
         this.name = name;
         this.currency = currency;
@@ -34,7 +34,13 @@ public class Account {
         this.user = user;
     }
 
-    public Account(String name, String currency, double balance, User user) {
+    public Account(String name, Currency currency, double balance) {
+        this.name = name;
+        this.currency = currency;
+        this.balance = balance;
+    }
+
+    public Account(String name, Currency currency, double balance, User user) {
         this.name = name;
         this.currency = currency;
         this.balance = balance;
@@ -57,11 +63,11 @@ public class Account {
         this.name = name;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

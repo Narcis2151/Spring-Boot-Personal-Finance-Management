@@ -1,0 +1,2 @@
+ALTER TABLE account
+MODIFY COLUMN currency ENUM('RON', 'EUR', 'USD');
