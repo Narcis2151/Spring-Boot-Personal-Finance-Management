@@ -24,6 +24,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Account> accounts;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -32,11 +35,19 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String fullName, String password, String email) {
+    public User(Long id, String fullName, String password, String email, List<Account> accounts) {
         this.id = id;
         this.fullName = fullName;
         this.password = password;
         this.email = email;
+        this.accounts = accounts;
+    }
+
+    public User(String fullName, String password, String email, List<Account> accounts) {
+        this.fullName = fullName;
+        this.password = password;
+        this.email = email;
+        this.accounts = accounts;
     }
 
     public User(String fullName, String password, String email) {
@@ -103,5 +114,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public List<Account> getAccounts() {
+        return accounts;
+    }
 
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
 }
