@@ -1,8 +1,14 @@
 package org.fna.finance.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "account")
 public class Account {
     @Id
@@ -19,6 +25,9 @@ public class Account {
     @Column(nullable = false)
     private double balance;
 
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transactions;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -26,8 +35,16 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long id, String name, Currency currency, double balance, User user) {
+    public Account(Long id, String name, Currency currency, double balance, User user, List<Transaction> transactions) {
         this.id = id;
+        this.name = name;
+        this.currency = currency;
+        this.balance = balance;
+        this.user = user;
+        this.transactions = transactions;
+    }
+
+    public Account(String name, Currency currency, double balance, User user) {
         this.name = name;
         this.currency = currency;
         this.balance = balance;
@@ -38,52 +55,5 @@ public class Account {
         this.name = name;
         this.currency = currency;
         this.balance = balance;
-    }
-
-    public Account(String name, Currency currency, double balance, User user) {
-        this.name = name;
-        this.currency = currency;
-        this.balance = balance;
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

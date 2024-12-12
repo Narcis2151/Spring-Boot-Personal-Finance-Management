@@ -1,7 +1,11 @@
 package org.fna.finance.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class UpdateAccountBalanceRequest {
     @NotNull
     private Double balance;
@@ -13,11 +17,4 @@ public class UpdateAccountBalanceRequest {
         this.balance = balance;
     }
 
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
 }

@@ -1,10 +1,6 @@
 package org.fna.finance.exception.advice;
 
-import org.fna.finance.exception.ExceptionResponse;
-import org.fna.finance.exception.AccountNotFoundException;
-import org.fna.finance.exception.InvalidCredentialsException;
-import org.fna.finance.exception.DuplicateEmailException;
-import org.fna.finance.exception.NotEnoughFundsException;
+import org.fna.finance.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +12,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({AccountNotFoundException.class})
     public ResponseEntity<ExceptionResponse> handle(AccountNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler({TransactionNotFoundException.class})
+    public ResponseEntity<ExceptionResponse> handle(TransactionNotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ExceptionResponse(e.getMessage()));

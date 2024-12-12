@@ -1,8 +1,12 @@
 package org.fna.finance.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.fna.finance.model.Currency;
 
+@Setter
+@Getter
 public class CreateAccountRequest {
     @NotBlank
     private String name;
@@ -22,27 +26,4 @@ public class CreateAccountRequest {
         this.balance = balance;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
 }
