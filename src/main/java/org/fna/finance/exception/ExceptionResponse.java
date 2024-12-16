@@ -1,5 +1,8 @@
 package org.fna.finance.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ExceptionResponse {
     private final String message;
     private final String timestamp;
@@ -9,11 +12,4 @@ public class ExceptionResponse {
         this.timestamp = java.time.Instant.now().toString();
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
 }

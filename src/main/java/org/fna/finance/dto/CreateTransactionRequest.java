@@ -21,9 +21,6 @@ public class CreateTransactionRequest {
     @NotBlank
     private String party;
 
-    @Positive
-    private Double balance;
-
     @NotNull
     private Date datePosted = new Date();
 
@@ -33,20 +30,18 @@ public class CreateTransactionRequest {
     public CreateTransactionRequest() {
     }
 
-    public CreateTransactionRequest(DebitCredit debitCredit, Double amount, String party, Double balance, Date datePosted, Long accountId) {
+    public CreateTransactionRequest(DebitCredit debitCredit, Double amount, String party, Date datePosted, Long accountId) {
         this.debitCredit = debitCredit;
         this.amount = amount;
         this.party = party;
-        this.balance = balance;
         this.datePosted = datePosted;
         this.accountId = accountId;
     }
 
-    public CreateTransactionRequest(DebitCredit debitCredit, Double amount, String party, Double balance, Long accountId) {
+    public CreateTransactionRequest(DebitCredit debitCredit, Double amount, String party, Long accountId) {
         this.debitCredit = debitCredit;
         this.amount = amount;
         this.party = party;
-        this.balance = balance;
         this.accountId = accountId;
     }
 
