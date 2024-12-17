@@ -48,7 +48,7 @@ public class AccountService {
         }
     }
 
-    public void deleteAccount(User user, Long id) throws RuntimeException {
+    public void deleteAccount(User user, Long id) throws AccountNotFoundException {
         Optional<Account> account = accountRepository.findByUserAndId(user, id);
         if (account.isPresent()) {
             accountRepository.delete(account.get());

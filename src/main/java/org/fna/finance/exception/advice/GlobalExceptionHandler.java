@@ -17,6 +17,12 @@ public class GlobalExceptionHandler {
                 .body(new ExceptionResponse(e.getMessage()));
     }
 
+    public ResponseEntity<ExceptionResponse> handle(CategoryNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(e.getMessage()));
+    }
+
     @ExceptionHandler({TransactionNotFoundException.class})
     public ResponseEntity<ExceptionResponse> handle(TransactionNotFoundException e) {
         return ResponseEntity

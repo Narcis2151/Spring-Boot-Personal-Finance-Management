@@ -36,7 +36,8 @@ public class TransactionMapper {
                 transaction.getAmount(),
                 transaction.getParty(),
                 transaction.getDatePosted(),
-                transaction.getAccount().getId()
+                transaction.getAccount().getId(),
+                transaction.getCategory().getId()
         );
     }
 
@@ -49,7 +50,8 @@ public class TransactionMapper {
                                 transaction.getAmount(),
                                 transaction.getParty(),
                                 transaction.getDatePosted(),
-                                transaction.getAccount().getId()
+                                transaction.getAccount().getId(),
+                                transaction.getCategory().getId()
                         )
                 )
                 .collect(Collectors.toList());

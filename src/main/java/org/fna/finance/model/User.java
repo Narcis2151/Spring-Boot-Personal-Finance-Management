@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactions;
 
+    @OneToMany(mappedBy = "user")
+    private List<Category> categories;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -42,21 +45,23 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String fullName, String password, String email, List<Account> accounts, List<Transaction> transactions) {
+    public User(Long id, String fullName, String password, String email, List<Account> accounts, List<Transaction> transactions, List<Category> categories) {
         this.id = id;
         this.fullName = fullName;
         this.password = password;
         this.email = email;
         this.accounts = accounts;
         this.transactions = transactions;
+        this.categories = categories;
     }
 
-    public User(String fullName, String password, String email, List<Account> accounts, List<Transaction> transactions) {
+    public User(String fullName, String password, String email, List<Account> accounts, List<Transaction> transactions, List<Category> categories) {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
         this.accounts = accounts;
         this.transactions = transactions;
+        this.categories = categories;
     }
 
     public User(String fullName, String password, String email) {

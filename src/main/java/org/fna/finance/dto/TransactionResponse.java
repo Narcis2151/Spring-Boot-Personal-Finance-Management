@@ -15,17 +15,19 @@ public class TransactionResponse {
     private String party;
     private Date datePosted;
     private Long accountId;
+    private Long categoryId;
 
     public TransactionResponse() {
     }
 
-    public TransactionResponse(Long id, DebitCredit debitCredit, Double amount, String party, Date datePosted, Long accountId) {
+    public TransactionResponse(Long id, DebitCredit debitCredit, Double amount, String party, Date datePosted, Long accountId, Long categoryId) {
         this.id = id;
         this.debitCredit = debitCredit;
         this.amount = amount;
         this.party = party;
         this.datePosted = datePosted;
         this.accountId = accountId;
+        this.categoryId = categoryId;
     }
 
 }

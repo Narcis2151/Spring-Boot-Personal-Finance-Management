@@ -30,17 +30,21 @@ public class Transaction {
     private Date datePosted;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     public Transaction() {
     }
 
-    public Transaction(Long id, DebitCredit debitCredit, Double amount, String party, Date datePosted, User user, Account account) {
+    public Transaction(Long id, DebitCredit debitCredit, Double amount, String party, Date datePosted, User user, Account account, Category category) {
         this.id = id;
         this.debitCredit = debitCredit;
         this.amount = amount;
@@ -48,15 +52,17 @@ public class Transaction {
         this.datePosted = datePosted;
         this.user = user;
         this.account = account;
+        this.category = category;
     }
 
-    public Transaction(double amount, DebitCredit debitCredit, String party, Date datePosted, User user, Account account) {
+    public Transaction(double amount, DebitCredit debitCredit, String party, Date datePosted, User user, Account account, Category category) {
         this.amount = amount;
         this.debitCredit = debitCredit;
         this.party = party;
         this.datePosted = datePosted;
         this.user = user;
         this.account = account;
+        this.category = category;
     }
 
     public Transaction(double amount, DebitCredit debitCredit, String party, Date datePosted) {
