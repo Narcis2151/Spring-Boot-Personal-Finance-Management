@@ -26,7 +26,18 @@ public class Category {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "category")
+    private List<Budget> budgets;
+
     public Category() {
+    }
+
+    public Category(Long id, String name, User user, List<Transaction> transactions, List<Budget> budgets) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+        this.transactions = transactions;
+        this.budgets = budgets;
     }
 
     public Category(Long id, String name, User user, List<Transaction> transactions) {

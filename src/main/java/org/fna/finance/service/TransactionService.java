@@ -1,12 +1,14 @@
 package org.fna.finance.service;
 
 import org.fna.finance.exception.TransactionNotFoundException;
+import org.fna.finance.model.Category;
 import org.fna.finance.model.DebitCredit;
 import org.fna.finance.model.Transaction;
 import org.fna.finance.model.User;
 import org.fna.finance.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,10 @@ public class TransactionService {
         transaction.setAccount(initialTransaction.getAccount());
         transaction.setUser(user);
         return transactionRepository.save(transaction);
+    }
+
+    public Double getSpentAmountWithinPeriodByCategory(User user, Long categoryId, Date startDate, Date endDate) {
+        return transactionRepository.getSpentAmountWithinPeriodByCategory(user, categoryId, startDate, endDate);
     }
 
     public Double getTransactionDifference(Transaction initialTransaction, Transaction updatedTransaction) {
