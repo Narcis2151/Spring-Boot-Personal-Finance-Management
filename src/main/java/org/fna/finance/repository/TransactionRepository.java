@@ -1,7 +1,5 @@
 package org.fna.finance.repository;
 
-import org.fna.finance.model.Account;
-import org.fna.finance.model.Category;
 import org.fna.finance.model.Transaction;
 import org.fna.finance.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +14,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Optional<Transaction> findByUserAndId(User user, Long id);
 
-    @Query("SELECT SUM(t.amount) " +
+    @Query("SELECT SUM(t.amount * t.account.currency.amountInRon) " +
             "FROM Transaction t " +
             "WHERE t.debitCredit = 'DEBIT' " +
             "AND t.user = ?1 AND t.category.id = ?2 " +

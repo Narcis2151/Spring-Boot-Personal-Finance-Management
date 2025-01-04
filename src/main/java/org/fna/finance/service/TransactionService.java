@@ -1,7 +1,6 @@
 package org.fna.finance.service;
 
 import org.fna.finance.exception.TransactionNotFoundException;
-import org.fna.finance.model.Category;
 import org.fna.finance.model.DebitCredit;
 import org.fna.finance.model.Transaction;
 import org.fna.finance.model.User;
@@ -37,7 +36,7 @@ public class TransactionService {
         }
     }
 
-    public Transaction updateTransaction(User user, Long id, Transaction transaction) {
+    public Transaction updateTransaction(User user, Long id, Transaction transaction) throws TransactionNotFoundException {
         Transaction initialTransaction = getTransaction(user, id);
         transaction.setAccount(initialTransaction.getAccount());
         transaction.setUser(user);
@@ -60,7 +59,7 @@ public class TransactionService {
                 if (updatedTransaction.getDebitCredit() == DebitCredit.CREDIT) {
                     return updatedTransaction.getAmount() - initialTransaction.getAmount();
                 } else {
-                    return - initialTransaction.getAmount() - updatedTransaction.getAmount();
+                    return -initialTransaction.getAmount() - updatedTransaction.getAmount();
                 }
             default:
                 throw new IllegalArgumentException("Unexpected value: " + initialTransaction.getDebitCredit());

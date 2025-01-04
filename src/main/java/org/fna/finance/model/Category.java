@@ -40,6 +40,12 @@ public class Category {
         this.budgets = budgets;
     }
 
+    public Category(Long id, String name, User user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
+
     public Category(Long id, String name, User user, List<Transaction> transactions) {
         this.id = id;
         this.name = name;

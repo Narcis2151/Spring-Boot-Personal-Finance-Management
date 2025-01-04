@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 @Component
 public class AccountMapper {
     public Account accountRequestToAccount(CreateAccountRequest createAccountRequest) {
-        return new Account(createAccountRequest.getName(), createAccountRequest.getCurrency(), createAccountRequest.getBalance());
+        return new Account(createAccountRequest.getName(), createAccountRequest.getBalance());
     }
 
     public AccountResponse accountToAccountResponse(Account account) {
-        return new AccountResponse(account.getId(), account.getName(), account.getCurrency().toString(), account.getBalance());
+        return new AccountResponse(account.getId(), account.getName(), account.getCurrency().getName(), account.getBalance());
     }
 
     public List<AccountResponse> accountsToAccountResponses(List<Account> accounts) {
         return accounts.stream()
-                .map(account -> new AccountResponse(account.getId(), account.getName(), account.getCurrency().toString(), account.getBalance()))
+                .map(account -> new AccountResponse(account.getId(), account.getName(), account.getCurrency().getName(), account.getBalance()))
                 .collect(Collectors.toList());
     }
 }

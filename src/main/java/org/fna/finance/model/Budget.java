@@ -37,6 +37,13 @@ public class Budget {
     public Budget() {
     }
 
+    public Budget(Long id, Double amountAvailable, Category category, User user) {
+        this.id = id;
+        this.amountAvailable = amountAvailable;
+        this.category = category;
+        this.user = user;
+    }
+
     public Budget(Double amountAvailable, Category category, User user) {
         this.amountAvailable = amountAvailable;
         this.category = category;
