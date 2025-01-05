@@ -26,10 +26,10 @@ public class RegisterRequest {
     public RegisterRequest() {
     }
 
-    public RegisterRequest(String fullName, String password, String email) {
+    public RegisterRequest(String fullName, String email, String password) {
         this.fullName = fullName;
-        this.password = password;
         this.email = email;
+        this.password = password;
     }
 
 }

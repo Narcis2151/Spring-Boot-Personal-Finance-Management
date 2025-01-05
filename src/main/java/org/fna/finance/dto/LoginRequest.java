@@ -23,9 +23,9 @@ public class LoginRequest {
     public LoginRequest() {
     }
 
-    public LoginRequest(String password, String email) {
-        this.password = password;
+    public LoginRequest(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 
 }
