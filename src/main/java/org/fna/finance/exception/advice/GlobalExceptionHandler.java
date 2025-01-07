@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
                 .body(new ExceptionResponse(e.getMessage()));
     }
 
+    @ExceptionHandler({BudgetNotFoundException.class})
     public ResponseEntity<ExceptionResponse> handle(BudgetNotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)

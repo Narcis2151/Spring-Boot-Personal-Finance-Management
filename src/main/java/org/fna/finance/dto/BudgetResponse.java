@@ -20,10 +20,10 @@ public class BudgetResponse {
     private Double amountSpent;
 
     @Schema(description = "Start Date", example = "2024-12-01")
-    private Date startDate;
+    private String startDate;
 
     @Schema(description = "End Date", example = "2025-01-01")
-    private Date endDate;
+    private String endDate;
 
     @Schema(description = "Category ID", example = "1")
     private Long categoryId;
@@ -31,7 +31,7 @@ public class BudgetResponse {
     public BudgetResponse() {
     }
 
-    public BudgetResponse(Long id, Double amountAvailable, Double amountSpent, Date startDate, Date endDate, Long categoryId) {
+    public BudgetResponse(Long id, Double amountAvailable, Double amountSpent, String startDate, String endDate, Long categoryId) {
         this.id = id;
         this.amountAvailable = amountAvailable;
         this.amountSpent = amountSpent;
@@ -40,7 +40,7 @@ public class BudgetResponse {
         this.categoryId = categoryId;
     }
 
-    public BudgetResponse(Long id, Double amountAvailable, Date startDate, Date endDate, Long categoryId) {
+    public BudgetResponse(Long id, Double amountAvailable, String startDate, String endDate, Long categoryId) {
         this.id = id;
         this.amountAvailable = amountAvailable;
         this.startDate = startDate;
@@ -48,7 +48,7 @@ public class BudgetResponse {
         this.categoryId = categoryId;
     }
 
-    public BudgetResponse(Double amountAvailable, Double amountSpent, Date startDate, Date endDate) {
+    public BudgetResponse(Double amountAvailable, Double amountSpent, String startDate, String endDate) {
         this.amountAvailable = amountAvailable;
         this.amountSpent = amountSpent;
         this.startDate = startDate;

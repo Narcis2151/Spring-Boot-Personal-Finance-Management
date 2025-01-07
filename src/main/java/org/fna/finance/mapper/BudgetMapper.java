@@ -17,8 +17,8 @@ public class BudgetMapper {
         return new BudgetResponse(
                 budget.getId(),
                 budget.getAmountAvailable(),
-                budget.getStartDate(),
-                budget.getEndDate(),
+                budget.getStartDate().toString(),
+                budget.getEndDate().toString(),
                 budget.getCategory().getId()
         );
     }
