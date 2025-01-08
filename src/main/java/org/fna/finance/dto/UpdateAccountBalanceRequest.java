@@ -10,14 +10,14 @@ import lombok.Setter;
 @Schema(description = "Update Account Balance Details")
 public class UpdateAccountBalanceRequest {
     @NotNull
-    @Schema(description = "Balance Of The Account", example = "1000")
-    private Double balance;
+    @Schema(description = "Amount To Add Or Subtract", example = "1000")
+    private Double amount;
 
     public UpdateAccountBalanceRequest() {
     }
 
-    public UpdateAccountBalanceRequest(Double balance) {
-        this.balance = balance;
+    public UpdateAccountBalanceRequest(Double amount) {
+        this.amount = amount;
     }
 
 }

@@ -21,7 +21,7 @@ public class CurrencyService {
     }
 
     public Currency getCurrency(String id) throws CurrencyNotFoundException {
-        Optional<Currency> currency = currencyRepository.findById(id);
+        Optional<Currency> currency = currencyRepository.findByName(id);
         if (currency.isPresent()) {
             return currency.get();
         } else {

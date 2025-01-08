@@ -81,7 +81,7 @@ public class AccountController {
                                                 @Valid @RequestBody UpdateAccountBalanceRequest balance,
                                                 @AuthenticationPrincipal User user) {
         return accountMapper.accountToAccountResponse(
-                accountService.updateAccountBalance(user, id, balance.getBalance())
+                accountService.updateAccountBalance(user, id, balance.getAmount())
         );
     }
 
