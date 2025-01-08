@@ -14,7 +14,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Optional<Transaction> findByUserAndId(User user, Long id);
 
-    @Query("SELECT SUM(t.amount * t.account.currency.amountInRon) " +
+    @Query("SELECT COALESCE(SUM(t.amount * t.account.currency.amountInRon), 0) " +
             "FROM Transaction t " +
             "WHERE t.debitCredit = 'DEBIT' " +
             "AND t.user = ?1 AND t.category.id = ?2 " +

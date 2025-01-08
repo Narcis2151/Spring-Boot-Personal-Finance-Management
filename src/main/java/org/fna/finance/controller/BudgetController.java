@@ -44,7 +44,7 @@ public class BudgetController {
     public List<BudgetResponse> getAllBudgets(@AuthenticationPrincipal User user) {
         List<Budget> budgets = budgetService.getAllBudgets(user);
         List<Double> amountsSpent = new ArrayList<>();
-        budgets.forEach(budget-> {
+        budgets.forEach(budget -> {
             double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(user, budget.getCategory().getId(), budget.getStartDate(), budget.getEndDate());
             amountsSpent.add(amountSpent);
         });
@@ -59,12 +59,16 @@ public class BudgetController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
     })
-    public BudgetResponse createBudget(@Valid @RequestBody CreateBudgetRequest createBudgetRequest, @AuthenticationPrincipal User user) {
+    public BudgetResponse createBudget(@Valid @RequestBody CreateBudgetRequest createBudgetRequest,
+                                       @AuthenticationPrincipal User user) {
         Budget budget = budgetMapper.createBudgetRequestToBudget(createBudgetRequest);
         Category category = categoryService.getCategory(user, createBudgetRequest.getCategoryId());
         budget.setCategory(category);
+        budget.setUser(user);
         Budget createdBudget = budgetService.createBudget(budget);
-        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(user, createdBudget.getCategory().getId(), createdBudget.getStartDate(), createdBudget.getEndDate());
+        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(
+                user, createdBudget.getCategory().getId(), createdBudget.getStartDate(), createdBudget.getEndDate()
+        );
         BudgetResponse budgetResponse = budgetMapper.budgetToBudgetResponse(createdBudget);
         budgetResponse.setAmountSpent(amountSpent);
         return budgetResponse;
@@ -78,7 +82,9 @@ public class BudgetController {
     })
     public BudgetResponse getBudget(@PathVariable Long id, @AuthenticationPrincipal User user) {
         Budget budget = budgetService.getBudget(user, id);
-        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(user, budget.getCategory().getId(), budget.getStartDate(), budget.getEndDate());
+        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(
+                user, budget.getCategory().getId(), budget.getStartDate(), budget.getEndDate()
+        );
         BudgetResponse budgetResponse = budgetMapper.budgetToBudgetResponse(budget);
         budgetResponse.setAmountSpent(amountSpent);
         return budgetResponse;
@@ -91,9 +97,15 @@ public class BudgetController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Budget not found"),
     })
-    public BudgetResponse updateBudget(@PathVariable Long id, @Valid @RequestBody UpdateBudgetRequest updateBudgetRequest, @AuthenticationPrincipal User user) {
-        Budget updatedBudget = budgetService.updateBudgetAmountAvailable(user, id, updateBudgetRequest.getAmountAvailable());
-        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(user, updatedBudget.getCategory().getId(), updatedBudget.getStartDate(), updatedBudget.getEndDate());
+    public BudgetResponse updateBudget(@PathVariable Long id,
+                                       @Valid @RequestBody UpdateBudgetRequest updateBudgetRequest,
+                                       @AuthenticationPrincipal User user) {
+        Budget updatedBudget = budgetService.updateBudgetAmountAvailable(
+                user, id, updateBudgetRequest.getAmountAvailable()
+        );
+        double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(
+                user, updatedBudget.getCategory().getId(), updatedBudget.getStartDate(), updatedBudget.getEndDate()
+        );
         BudgetResponse budgetResponse = budgetMapper.budgetToBudgetResponse(updatedBudget);
         budgetResponse.setAmountSpent(amountSpent);
         return budgetResponse;

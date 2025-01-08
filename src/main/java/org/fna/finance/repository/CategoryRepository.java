@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    public List<Category> findAllByUser(User user);
+    List<Category> findAllByUser(User user);
 
-    public Optional<Category> findByUserAndId(User user, Long id);
+    Optional<Category> findByUserAndId(User user, Long id);
 }

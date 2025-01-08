@@ -27,8 +27,8 @@ public class CreateTransactionRequest {
     private String party;
 
     @NotNull
-    @Schema(description = "Date Of The Transaction", example = "2021-12-12")
-    private Date datePosted = new Date();
+    @Schema(description = "Date Of The Transaction", example = "2025-01-10T09:46:21.488Z")
+    private Date datePosted;
 
     @NotNull
     @Schema(description = "Account Id", example = "1")

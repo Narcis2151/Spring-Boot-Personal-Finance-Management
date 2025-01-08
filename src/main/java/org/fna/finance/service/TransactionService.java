@@ -37,10 +37,19 @@ public class TransactionService {
     }
 
     public Transaction updateTransaction(User user, Long id, Transaction transaction) throws TransactionNotFoundException {
-        Transaction initialTransaction = getTransaction(user, id);
-        transaction.setAccount(initialTransaction.getAccount());
-        transaction.setUser(user);
-        return transactionRepository.save(transaction);
+        Transaction initialTransaction = transactionRepository.findByUserAndId(user, id).orElse(null);
+        if (transaction != null && initialTransaction != null) {
+            initialTransaction.setAmount(transaction.getAmount());
+            initialTransaction.setDebitCredit(transaction.getDebitCredit());
+            initialTransaction.setDatePosted(transaction.getDatePosted());
+            initialTransaction.setParty(transaction.getParty());
+            initialTransaction.setUser(transaction.getUser());
+            initialTransaction.setAccount(transaction.getAccount());
+            initialTransaction.setCategory(transaction.getCategory());
+            return transactionRepository.save(initialTransaction);
+        } else {
+            throw new TransactionNotFoundException(id);
+        }
     }
 
     public Double getSpentAmountWithinPeriodByCategory(User user, Long categoryId, Date startDate, Date endDate) {

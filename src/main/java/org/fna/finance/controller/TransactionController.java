@@ -116,6 +116,8 @@ public class TransactionController {
                                                  @AuthenticationPrincipal User user) {
         Transaction initialTransaction = transactionService.getTransaction(user, id);
         Transaction updatedTransaction = transactionMapper.updateTransactionRequestToTransaction(updateTransactionRequest);
+        updatedTransaction.setUser(user);
+        updatedTransaction.setAccount(initialTransaction.getAccount());
         Double transactionDifference = transactionService.getTransactionDifference(initialTransaction, updatedTransaction);
         accountService.updateAccountBalance(user, initialTransaction.getAccount().getId(), transactionDifference);
 
