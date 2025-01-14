@@ -50,22 +50,22 @@ class CurrencyServiceTest {
 
         Currency currency = new Currency("USD", 4.11);
 
-        when(currencyRepository.findById("USD")).thenReturn(Optional.of(currency));
+        when(currencyRepository.findByName("USD")).thenReturn(Optional.of(currency));
 
         Currency result = currencyService.getCurrency("USD");
 
         assertNotNull(result);
         assertEquals("USD", result.getName());
-        verify(currencyRepository).findById("USD");
+        verify(currencyRepository).findByName("USD");
     }
 
     @Test
     void getCurrency_CurrencyNotFoundException() {
 
-        when(currencyRepository.findById("USD")).thenReturn(Optional.empty());
+        when(currencyRepository.findByName("USD")).thenReturn(Optional.empty());
 
         assertThrows(CurrencyNotFoundException.class, () -> currencyService.getCurrency("USD"));
 
-        verify(currencyRepository).findById("USD");
+        verify(currencyRepository).findByName("USD");
     }
 }

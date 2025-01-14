@@ -102,7 +102,7 @@ public class TransactionControllerTest {
 
         mockMvc.perform(post("/transaction")
                         .contentType("application/json")
-                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\":1,\"categoryId\":1}"))
+                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\":1,\"categoryId\":1, \"datePosted\":\"2025-01-12T09:46:21.488Z\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.debitCredit").value("DEBIT"))
@@ -158,7 +158,7 @@ public class TransactionControllerTest {
 
         mockMvc.perform(put("/transaction/1")
                         .contentType("application/json")
-                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1}"))
+                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1,\"datePosted\":\"2025-01-12T09:46:21.488Z\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.debitCredit").value("DEBIT"))
@@ -176,7 +176,7 @@ public class TransactionControllerTest {
 
         mockMvc.perform(put("/transaction/1")
                         .contentType("application/json")
-                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1}"))
+                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1,\"datePosted\":\"2025-01-12T09:46:21.488Z\"}"))
                 .andExpect(status().isNotFound());
     }
 
@@ -185,13 +185,14 @@ public class TransactionControllerTest {
     public void updateTransaction_AccountNotFound() throws Exception {
         Transaction transaction = new Transaction(1L, DebitCredit.DEBIT, 1000.0, "Test Party", new Date(), new User(), new Account(), new Category());
 
+        when(transactionMapper.updateTransactionRequestToTransaction(any())).thenReturn(transaction);
         when(accountService.getAccount(any(), any())).thenThrow(new AccountNotFoundException(1L));
         when(transactionService.getTransaction(any(), any())).thenReturn(transaction);
         when(transactionService.getTransactionDifference(any(), any())).thenThrow(new AccountNotFoundException(1L));
 
         mockMvc.perform(put("/transaction/1")
                         .contentType("application/json")
-                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1}"))
+                        .content("{\"amount\":1000.0,\"debitCredit\":\"DEBIT\",\"party\":\"Test Party\",\"accountId\": 1,\"datePosted\":\"2025-01-12T09:46:21.488Z\"}"))
                 .andExpect(status().isNotFound());
     }
 

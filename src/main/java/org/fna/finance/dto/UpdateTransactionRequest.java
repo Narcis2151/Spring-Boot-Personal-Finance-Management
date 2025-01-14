@@ -28,7 +28,7 @@ public class UpdateTransactionRequest {
 
     @NotNull
     @Schema(description = "Date Of The Transaction", example = "2021-12-12")
-    private Date datePosted = new Date();
+    private Date datePosted;
 
     public UpdateTransactionRequest() {
     }

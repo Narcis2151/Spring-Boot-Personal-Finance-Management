@@ -36,7 +36,7 @@ public class TransactionController {
     @GetMapping
     @Operation(summary = "Get all transactions", description = "Get all transactions for the authenticated user", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transactions retrieved successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
     })
     public List<TransactionResponse> getAllTransactions(@AuthenticationPrincipal User user) {
         return transactionMapper.transactionsToTransactionResponse(
@@ -47,8 +47,8 @@ public class TransactionController {
     @PostMapping
     @Operation(summary = "Create transaction", description = "Create a new transaction", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transaction created successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
     })
     public TransactionResponse createTransaction(@Valid @RequestBody CreateTransactionRequest createTransactionRequest,
                                                  @AuthenticationPrincipal User user) {
@@ -72,8 +72,8 @@ public class TransactionController {
     @GetMapping("/{id}")
     @Operation(summary = "Get transaction", description = "Get a transaction by id", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transaction retrieved successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found"),
     })
     public TransactionResponse getTransaction(@PathVariable Long id, @AuthenticationPrincipal User user) {
         return transactionMapper.transactionToTransactionResponse(
@@ -84,9 +84,9 @@ public class TransactionController {
     @PutMapping("/{id}/category")
     @Operation(summary = "Update transaction category", description = "Update the category of a transaction", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transaction category updated successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found"),
     })
     public TransactionResponse updateTransactionCategory(@PathVariable Long id,
                                                          @Valid @RequestBody UpdateTransactionCategoryRequest updateTransactionCategoryRequest,
@@ -107,9 +107,9 @@ public class TransactionController {
     @PutMapping("/{id}")
     @Operation(summary = "Update transaction", description = "Update a transaction", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transaction updated successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found"),
     })
     public TransactionResponse updateTransaction(@PathVariable Long id,
                                                  @Valid @RequestBody UpdateTransactionRequest updateTransactionRequest,
@@ -118,6 +118,7 @@ public class TransactionController {
         Transaction updatedTransaction = transactionMapper.updateTransactionRequestToTransaction(updateTransactionRequest);
         updatedTransaction.setUser(user);
         updatedTransaction.setAccount(initialTransaction.getAccount());
+        updatedTransaction.setCategory(initialTransaction.getCategory());
         Double transactionDifference = transactionService.getTransactionDifference(initialTransaction, updatedTransaction);
         accountService.updateAccountBalance(user, initialTransaction.getAccount().getId(), transactionDifference);
 
@@ -133,8 +134,8 @@ public class TransactionController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete transaction", description = "Delete a transaction by id", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Transaction deleted successfully"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", useReturnTypeSchema = false),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found", useReturnTypeSchema = false),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Transaction not found"),
     })
     public void deleteTransaction(@PathVariable Long id, @AuthenticationPrincipal User user) {
         transactionService.deleteTransaction(user, id);

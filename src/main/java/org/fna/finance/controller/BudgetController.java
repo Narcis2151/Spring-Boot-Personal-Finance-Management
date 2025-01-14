@@ -45,7 +45,9 @@ public class BudgetController {
         List<Budget> budgets = budgetService.getAllBudgets(user);
         List<Double> amountsSpent = new ArrayList<>();
         budgets.forEach(budget -> {
-            double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(user, budget.getCategory().getId(), budget.getStartDate(), budget.getEndDate());
+            double amountSpent = transactionService.getSpentAmountWithinPeriodByCategory(
+                    user, budget.getCategory().getId(), budget.getStartDate(), budget.getEndDate()
+            );
             amountsSpent.add(amountSpent);
         });
         List<BudgetResponse> budgetResponses = budgetMapper.budgetListToBudgetResponseList(budgetService.getAllBudgets(user));

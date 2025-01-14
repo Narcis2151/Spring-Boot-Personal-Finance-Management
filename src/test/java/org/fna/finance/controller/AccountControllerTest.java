@@ -157,7 +157,7 @@ public class AccountControllerTest {
 
         mockMvc.perform(put("/account/1")
                         .contentType("application/json")
-                        .content("{\"balance\": 2000.0}")
+                        .content("{\"amount\": 2000.0}")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -174,7 +174,7 @@ public class AccountControllerTest {
 
         mockMvc.perform(put("/account/1")
                         .contentType("application/json")
-                        .content("{\"balance\": 2000.0}")
+                        .content("{\"amount\": 2000.0}")
                 )
                 .andExpect(status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
