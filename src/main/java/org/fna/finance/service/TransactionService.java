@@ -12,21 +12,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TransactionService {
+public class TransactionService implements ITransactionService {
     private final TransactionRepository transactionRepository;
 
     public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
 
+    @Override
     public List<Transaction> getAllTransactions(User user) {
         return transactionRepository.findAllByUser(user);
     }
 
+    @Override
     public Transaction createTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
+    @Override
     public Transaction getTransaction(User user, Long id) throws TransactionNotFoundException {
         Optional<Transaction> transaction = transactionRepository.findByUserAndId(user, id);
         if (transaction.isPresent()) {
@@ -36,6 +39,7 @@ public class TransactionService {
         }
     }
 
+    @Override
     public Transaction updateTransaction(User user, Long id, Transaction transaction) throws TransactionNotFoundException {
         Transaction initialTransaction = transactionRepository.findByUserAndId(user, id).orElse(null);
         if (transaction != null && initialTransaction != null) {
@@ -52,10 +56,12 @@ public class TransactionService {
         }
     }
 
+    @Override
     public Double getSpentAmountWithinPeriodByCategory(User user, Long categoryId, Date startDate, Date endDate) {
         return transactionRepository.getSpentAmountWithinPeriodByCategory(user, categoryId, startDate, endDate);
     }
 
+    @Override
     public Double getTransactionDifference(Transaction initialTransaction, Transaction updatedTransaction) {
         switch (initialTransaction.getDebitCredit()) {
             case DEBIT:
@@ -75,6 +81,7 @@ public class TransactionService {
         }
     }
 
+    @Override
     public void deleteTransaction(User user, Long id) throws TransactionNotFoundException {
         Optional<Transaction> transaction = transactionRepository.findByUserAndId(user, id);
         if (transaction.isPresent()) {

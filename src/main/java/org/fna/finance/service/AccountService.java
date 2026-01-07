@@ -10,21 +10,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountService {
+public class AccountService implements IAccountService {
     private final AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
+    @Override
     public List<Account> getAllAccounts(User user) {
         return accountRepository.findAllByUser(user);
     }
 
+    @Override
     public Account createAccount(Account account) {
         return accountRepository.save(account);
     }
 
+    @Override
     public Account getAccount(User user, Long id) throws AccountNotFoundException {
         Optional<Account> account = accountRepository.findByUserAndId(user, id);
         if (account.isPresent()) {
@@ -34,6 +37,7 @@ public class AccountService {
         }
     }
 
+    @Override
     public Account updateAccountBalance(User user, Long id, double amount) throws AccountNotFoundException, NotEnoughFundsException {
         Account account = accountRepository.findByUserAndId(user, id).orElse(null);
         if (account != null) {
@@ -48,6 +52,7 @@ public class AccountService {
         }
     }
 
+    @Override
     public void deleteAccount(User user, Long id) throws AccountNotFoundException {
         Optional<Account> account = accountRepository.findByUserAndId(user, id);
         if (account.isPresent()) {

@@ -9,17 +9,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CurrencyService {
+public class CurrencyService implements ICurrencyService {
     private final CurrencyRepository currencyRepository;
 
     public CurrencyService(CurrencyRepository categoryRepository) {
         this.currencyRepository = categoryRepository;
     }
 
+    @Override
     public List<Currency> getAllCurrencies() {
         return currencyRepository.findAll();
     }
 
+    @Override
     public Currency getCurrency(String id) throws CurrencyNotFoundException {
         Optional<Currency> currency = currencyRepository.findByName(id);
         if (currency.isPresent()) {

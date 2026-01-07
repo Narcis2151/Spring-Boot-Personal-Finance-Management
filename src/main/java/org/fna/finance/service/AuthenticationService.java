@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -29,6 +29,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
     public User signup(RegisterRequest input) throws DuplicateEmailException {
         if (userRepository.existsByEmail(input.getEmail())) {
             throw new DuplicateEmailException();
@@ -42,6 +43,7 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
+    @Override
     public User authenticate(LoginRequest input) throws InvalidCredentialsException {
         try {
             authenticationManager.authenticate(

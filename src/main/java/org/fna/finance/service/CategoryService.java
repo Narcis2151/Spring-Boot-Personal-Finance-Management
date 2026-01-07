@@ -10,21 +10,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
     public List<Category> getAllCategories(User user) {
         return categoryRepository.findAllByUser(user);
     }
 
+    @Override
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
 
+    @Override
     public Category getCategory(User user, Long id) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findByUserAndId(user, id);
         if (category.isPresent()) {
@@ -34,6 +37,7 @@ public class CategoryService {
         }
     }
 
+    @Override
     public Category updateCategoryName(User user, Long id, String name) throws CategoryNotFoundException {
         Category category = categoryRepository.findByUserAndId(user, id).orElse(null);
         if (category != null) {
@@ -44,6 +48,7 @@ public class CategoryService {
         }
     }
 
+    @Override
     public void deleteCategory(User user, Long id) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findByUserAndId(user, id);
         if (category.isPresent()) {
