@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TransactionMapper {
+public class TransactionMapper implements ITransactionMapper {
+    @Override
     public Transaction createTransactionRequestToTransaction(CreateTransactionRequest createTransactionRequest) {
         return new Transaction(
                 createTransactionRequest.getAmount(),
@@ -20,6 +21,7 @@ public class TransactionMapper {
         );
     }
 
+    @Override
     public Transaction updateTransactionRequestToTransaction(UpdateTransactionRequest updateTransactionRequest) {
         return new Transaction(
                 updateTransactionRequest.getAmount(),
@@ -29,6 +31,7 @@ public class TransactionMapper {
         );
     }
 
+    @Override
     public TransactionResponse transactionToTransactionResponse(Transaction transaction) {
         return new TransactionResponse(
                 transaction.getId(),
@@ -41,6 +44,7 @@ public class TransactionMapper {
         );
     }
 
+    @Override
     public List<TransactionResponse> transactionsToTransactionResponse(List<Transaction> transactions) {
         return transactions.stream()
                 .map(

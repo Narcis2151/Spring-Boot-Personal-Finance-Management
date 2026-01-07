@@ -9,15 +9,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class AccountMapper {
+public class AccountMapper implements IAccountMapper {
+    @Override
     public Account accountRequestToAccount(CreateAccountRequest createAccountRequest) {
         return new Account(createAccountRequest.getName(), createAccountRequest.getBalance());
     }
 
+    @Override
     public AccountResponse accountToAccountResponse(Account account) {
         return new AccountResponse(account.getId(), account.getName(), account.getCurrency().getName(), account.getBalance());
     }
 
+    @Override
     public List<AccountResponse> accountsToAccountResponses(List<Account> accounts) {
         return accounts.stream()
                 .map(account -> new AccountResponse(account.getId(), account.getName(), account.getCurrency().getName(), account.getBalance()))

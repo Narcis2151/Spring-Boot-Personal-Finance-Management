@@ -9,15 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CategoryMapper {
+public class CategoryMapper implements ICategoryMapper {
+    @Override
     public Category categoryRequestToCategory(CategoryRequest createCategoryRequest) {
         return new Category(createCategoryRequest.getName());
     }
 
+    @Override
     public CategoryResponse categoryToCategoryResponse(Category category) {
         return new CategoryResponse(category.getId(), category.getName());
     }
 
+    @Override
     public List<CategoryResponse> categoriesToCategoriesResponse(List<Category> categories) {
         return categories.stream()
                 .map(category -> new CategoryResponse(category.getId(), category.getName()))

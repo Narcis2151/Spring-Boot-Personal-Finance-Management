@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BudgetMapper {
+public class BudgetMapper implements IBudgetMapper {
+    @Override
     public Budget createBudgetRequestToBudget(CreateBudgetRequest createBudgetRequest) {
         return new Budget(createBudgetRequest.getAmountAvailable());
     }
 
+    @Override
     public BudgetResponse budgetToBudgetResponse(Budget budget) {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -27,6 +29,7 @@ public class BudgetMapper {
         );
     }
 
+    @Override
     public List<BudgetResponse> budgetListToBudgetResponseList(List<Budget> budgetList) {
         return budgetList.stream().map(this::budgetToBudgetResponse).collect(Collectors.toList());
     }
