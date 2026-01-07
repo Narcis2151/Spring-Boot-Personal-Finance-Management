@@ -18,7 +18,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "FROM Transaction t " +
             "WHERE t.debitCredit = 'DEBIT' " +
             "AND t.user = ?1 AND t.category.id = ?2 " +
-            "AND t.datePosted >= ?3 " +
-            "AND t.datePosted <= ?4")
+            "AND cast(t.datePosted as date) >= ?3 " +
+            "AND cast(t.datePosted as date) <= ?4")
     Double getSpentAmountWithinPeriodByCategory(User user, Long categoryId, Date startDate, Date endDate);
 }
