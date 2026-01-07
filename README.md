@@ -26,6 +26,6 @@
 
 ## Unit Tests:
 
-### Unit Tests have been written for all service and controller methods
+### Unit Tests have been written for all service methods
     
 ![image.png](images/tests.png)
